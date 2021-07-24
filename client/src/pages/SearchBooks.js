@@ -12,6 +12,7 @@ import {
 import Auth from "../utils/auth";
 import { saveBook, searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
+import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import { QUERY_BOOKS } from "../utils/queries";
 
@@ -66,7 +67,7 @@ const SearchBooks = () => {
   const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-
+    const [saveBook, { error }] = useMutation(ADD_BOOK);
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
